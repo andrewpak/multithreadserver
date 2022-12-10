@@ -16,15 +16,18 @@ public class ServerHelper extends Thread {
         
         try{
             System.out.println("Server helper running..");
+            
             in = new InputStreamReader(s.getInputStream());
             br = new BufferedReader(in);
             String str = br.readLine();
-            System.out.println("client: " + str);
+            System.out.println("the client sent: " + str);
 
         }
         catch(IOException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
+
+        System.out.println("Disconnect");
    }
    
 }

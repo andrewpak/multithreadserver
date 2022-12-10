@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.*;
 import java.net.Socket;
-
+import java.util.Random;
+import java.util.random.*;
 public class TeacherClient extends Thread {
     private Socket socket;
     private BufferedReader bufferedReader;
@@ -23,7 +24,9 @@ public class TeacherClient extends Thread {
         try {
 
             try {
-                sleep(5000);
+                Random rand = new Random();
+                int r = rand.nextInt(1,10);
+                sleep(r * 1000);
             }
             catch(InterruptedException e){
                 e.printStackTrace();
