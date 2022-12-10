@@ -33,7 +33,7 @@ public class TeacherClient extends Thread {
             }
             System.out.println("Sending message to server..");
             PrintWriter pr = new PrintWriter(socket.getOutputStream());
-            pr.println("Hello, world");
+            pr.println("waitStudents");
             pr.flush();
         }
         catch (IOException e){

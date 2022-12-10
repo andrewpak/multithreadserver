@@ -2,8 +2,6 @@ import java.net.*;
 import java.io.*;
 
 public class Server {
-    private InputStreamReader in;
-    private BufferedReader br;
     ServerSocket serverSocket = null;
     public Server () throws Exception {
         int port = 3000;
