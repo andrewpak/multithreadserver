@@ -8,9 +8,14 @@ public class ServerHelper extends Thread {
     private InputStreamReader in;
     private BufferedReader br;
     private Socket s;
+    public static long time = System.currentTimeMillis();
     private static Map<String, Runnable> rpcs = new HashMap<>();
     public ServerHelper(Socket s) {
         this.s = s;
+   }
+
+   public static void msg(String m){
+     System.out.println("[" + (System.currentTimeMillis() - time) + "] " + m);
    }
 
    public static void registerRPC(String s, Runnable rpc){
@@ -27,27 +32,26 @@ public class ServerHelper extends Thread {
    // skeleton method
 
    public static void waitForStudents() {
-        System.out.println("Executing RPC...");
+        msg("Executing RPC...");
         try {
           sleep(500);  
         }
         catch (InterruptedException e){
           e.printStackTrace();
         }
-        System.out.println("Waiting for students");
+        msg("Waiting for students");
    }
 
    public void run() {
         
         try{
             
-            System.out.println("Server helper running..");
+            msg("Server helper running..");
             registerRPC("waitStudents", () -> waitForStudents());
             in = new InputStreamReader(s.getInputStream());
             br = new BufferedReader(in);
             String str = br.readLine();
-            System.out.println("the client sent: " + str);
-            System.out.println("executing remote procedure...");
+            msg("the client sent: " + str);
             executeRPC(str);
 
         }
@@ -55,7 +59,7 @@ public class ServerHelper extends Thread {
             //e.printStackTrace();
         }
 
-        System.out.println("Disconnect");
+        msg("Disconnecting..");
    }
    
 }

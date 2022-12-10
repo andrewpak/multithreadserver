@@ -7,9 +7,10 @@ public class TeacherClient extends Thread {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    public static long time = System.currentTimeMillis();
     public TeacherClient () {
         try {
-            System.out.println("teacher created");
+            msg("teacher created");
             this.socket = new Socket("localhost", 3000);
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -18,6 +19,10 @@ public class TeacherClient extends Thread {
 
             e.printStackTrace();
         }
+    }
+
+    public static void msg(String m){
+        System.out.println("[" + (System.currentTimeMillis() - time) + "] " + m);
     }
 
     public void run (){
@@ -31,8 +36,9 @@ public class TeacherClient extends Thread {
             catch(InterruptedException e){
                 e.printStackTrace();
             }
-            System.out.println("Sending message to server..");
+            msg("Sending request to server..");
             PrintWriter pr = new PrintWriter(socket.getOutputStream());
+            // call remote procedure
             pr.println("waitStudents");
             pr.flush();
         }
