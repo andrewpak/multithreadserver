@@ -6,12 +6,12 @@ public class TeacherClient extends Thread {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    public TeacherClient (Socket  socket) {
+    public TeacherClient () {
         try {
-            this.socket = socket;
+            System.out.println("teacher created");
+            this.socket = new Socket("localhost", 3000);
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            new Thread(this).start();
         } 
         catch (IOException e) {
 
@@ -21,6 +21,14 @@ public class TeacherClient extends Thread {
 
     public void run (){
         try {
+
+            try {
+                sleep(5000);
+            }
+            catch(InterruptedException e){
+                e.printStackTrace();
+            }
+            System.out.println("Sending message to server..");
             PrintWriter pr = new PrintWriter(socket.getOutputStream());
             pr.println("Hello, world");
             pr.flush();
@@ -30,9 +38,14 @@ public class TeacherClient extends Thread {
         }
     }
     public static void main(String[] args) throws IOException  {
-        int port = 3000;
-        Socket socket = new Socket("localhost", port);
-        new TeacherClient(socket);
+        TeacherClient[] teacherClientAry = new TeacherClient[5];
+
+        for(int i = 0;i < teacherClientAry.length;i++){
+            teacherClientAry[i] = new TeacherClient();
+        }
+
+        for(int i = 0;i < teacherClientAry.length;i++){
+            teacherClientAry[i].start();
+        }
     }
-    
 }
