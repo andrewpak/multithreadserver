@@ -9,8 +9,8 @@ public class TeacherClient extends Thread {
     public TeacherClient (Socket  socket) {
         try {
             this.socket = socket;
-            this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.bufferedReader= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             new Thread(this).start();
         } 
         catch (IOException e) {
@@ -20,10 +20,18 @@ public class TeacherClient extends Thread {
     }
 
     public void run (){
-
+        try {
+            PrintWriter pr = new PrintWriter(socket.getOutputStream());
+            pr.println("Hello, world");
+            pr.flush();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
     public static void main(String[] args) throws IOException  {
-        Socket socket = new Socket("localhost", 3000);
+        int port = 3000;
+        Socket socket = new Socket("localhost", port);
         new TeacherClient(socket);
     }
     
