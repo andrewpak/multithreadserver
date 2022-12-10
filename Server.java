@@ -1,23 +1,24 @@
-import java.net.ServerSocket;
-import java.io.IOException;
+import java.net.*;
+import java.io.*;
 
 public class Server {
 
     public Server () {
+        int port = 3000;
+        ServerSocket serverSocket = null;
+        while(true){
 
-        try {
-            ServerSocket serverSocket = null;
-            while(true) {
-                serverSocket = new ServerSocket(3000);
-
+            try {
+                serverSocket = new ServerSocket(port);
                 serverSocket.close();
             }
+        
+            catch (IOException e){
+                System.out.println("Unable to listen to port.");
+                e.printStackTrace();
+            }
         }
-	
-        catch (IOException e){
-            System.out.println("Unable to listen to port.");
-            e.printStackTrace();
-        }
+
 
     }
 
