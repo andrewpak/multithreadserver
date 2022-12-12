@@ -39,7 +39,7 @@ public class TeacherClient extends Thread {
             msg("Sending request to server..");
             PrintWriter pr = new PrintWriter(socket.getOutputStream());
             // call remote procedure
-            pr.println("waitStudents");
+            pr.println("waitForAll");
             pr.flush();
         }
         catch (IOException e){
@@ -47,14 +47,6 @@ public class TeacherClient extends Thread {
         }
     }
     public static void main(String[] args) throws IOException  {
-        TeacherClient[] teacherClientAry = new TeacherClient[5];
-
-        for(int i = 0;i < teacherClientAry.length;i++){
-            teacherClientAry[i] = new TeacherClient();
-        }
-
-        for(int i = 0;i < teacherClientAry.length;i++){
-            teacherClientAry[i].start();
-        }
+        new TeacherClient().start();;
     }
 }
