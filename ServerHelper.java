@@ -12,10 +12,13 @@ public class ServerHelper extends Thread {
     public Object convey;
     public static long time = System.currentTimeMillis();
     private static Map<String, Runnable> rpcs = new HashMap<>();
+
     public ServerHelper(Socket s, Object c, int myCount) {
         this.s = s;
         this.convey = c;
         this.count = myCount;
+        registerRPC("waitForAll", () -> waitForAll(convey));
+        registerRPC("notifyTeacher", () -> notifyTeacher(convey));
    }
 
    public static void msg(String m){
@@ -67,8 +70,6 @@ public class ServerHelper extends Thread {
         try{
             
             msg("Server helper running..");
-            registerRPC("waitForAll", () -> waitForAll(convey));
-            registerRPC("notifyTeacher", () -> notifyTeacher(convey));
             in = new InputStreamReader(s.getInputStream());
             br = new BufferedReader(in);
             String str = br.readLine();
